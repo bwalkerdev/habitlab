@@ -22,9 +22,26 @@ async fn py_greet() -> String {
     result
 }
 
+#[tauri::command]
+async fn py_path() -> String {
+    println!("Rust: Call PyPath");
+    let (mut rx, child) = Command::new("current_path")
+        .spawn()
+        .expect("Failed to spawn py_path.py");
+    let mut result = String::new();
+    while let Some(event) = rx.recv().await {
+        if let CommandEvent::Stdout(line) = event {
+            result = line.clone();
+            println!("Python: {}", line);
+            break; // Only lets python send one line. This is not ideal
+        }
+    }
+    result
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![py_greet])
+        .invoke_handler(tauri::generate_handler![py_greet, py_path])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -16,10 +16,8 @@
         "all": false,
         "sidecar": true,
         "scope": [
-          {
-            "name": "../python/dist/greeting",
-            "sidecar": true
-          }
+          { "name": "../python/dist/greeting", "sidecar": true },
+          { "name": "../python/dist/current_path", "sidecar": true }
         ],
         "open": true
       }
@@ -32,7 +30,8 @@
         "depends": []
       },
       "externalBin": [
-        "../python/dist/greeting"
+        "../python/dist/greeting",
+        "../python/dist/current_path"
       ],
       "icon": [
         "icons/32x32.png",
@@ -41,7 +40,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.walker.habitlab",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
