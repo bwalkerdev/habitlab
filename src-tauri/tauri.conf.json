@@ -16,7 +16,9 @@
         "all": false,
         "sidecar": true,
         "scope": [
-          { "name": "../python/dist/greeting", "sidecar": true }
+          { "name": "../python/dist/greeting", "sidecar": true },
+          { "name": "../python/dist/check_config", "sidecar": true },
+          { "name": "../python/dist/read_write_config", "sidecar": true}
         ],
         "open": true
       }
@@ -29,7 +31,9 @@
         "depends": []
       },
       "externalBin": [
-        "../python/dist/greeting"
+        "../python/dist/greeting",
+        "../python/dist/check_config",
+        "../python/dist/read_write_config"
       ],
       "icon": [
         "icons/32x32.png",

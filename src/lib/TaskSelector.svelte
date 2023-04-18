@@ -1,5 +1,17 @@
 <script lang="ts">
+	import { invoke } from '@tauri-apps/api/tauri';
 	import Icon from '@iconify/svelte';
+	import { onMount } from 'svelte';
+
+	interface Category {
+		label: string;
+		color: string;
+	}
+	interface Config {
+		categories: Category[];
+	}
+
+	let stringConfig: string;
 	let selected = '';
 	let newChipName = '';
 
@@ -13,32 +25,46 @@
 
 	let chipColor = randomColor();
 
-	let chipArr = [
-		{ task: 'Sleep', color: 'red' },
-		{ task: 'Eat', color: 'blue' },
-		{ task: 'Girlfriend', color: 'green' },
-		{ task: 'School', color: 'orange' }
-	];
+	let chipArr: Category[] = [];
+
+	onMount(async () => {
+		stringConfig = await invoke('get_config');
+		let config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
+		chipArr = config.categories;
+	});
 
 	function inChipArr() {
 		for (let i = 0; i < chipArr.length; i++) {
-			if (chipArr[i].task === newChipName) {
+			if (chipArr[i].label === newChipName) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	function pushChipArr() {
+	async function pushChipArr() {
 		if (newChipName && newChipName != 'Null' && newChipName != 'null' && !inChipArr()) {
-			chipArr = [...chipArr, { task: newChipName, color: chipColor }];
+			invoke('check_config');
+			// Test push to python
+			stringConfig = await invoke('add_category', {
+				category: newChipName,
+				color: chipColor
+			});
+			let config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
+			console.log(stringConfig);
+			chipArr = config.categories;
 			newChipName = '';
 			chipColor = randomColor();
 		}
 	}
-	function removeChipArr(index: number) {
-		chipArr.splice(index, 1);
-		chipArr = [...chipArr];
+	async function removeChipArr(index: number) {
+		let category = chipArr[index].label;
+		invoke('check_config');
+		stringConfig = await invoke('remove_category', {
+			category: category
+		});
+		let config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
+		chipArr = config.categories;
 	}
 	const onKeyPress = (e: KeyboardEvent) => {
 		if (e.code === 'Enter') pushChipArr();
@@ -49,20 +75,20 @@
 	<div class="card p-4 ml-5 flex flex-grow flex-nowrap overflow-x-auto rounded-lg">
 		{#each chipArr as c, index}
 			<div
-				class="chip {selected === c.task ? 'chip-selected' : 'chip-not-selected'} mx-1"
+				class="chip {selected === c.label ? 'chip-selected' : 'chip-not-selected'} mx-1"
 				style="--theme-color: {c.color}"
 				on:click={() => {
-					selected = c.task;
+					selected = c.label;
 				}}
 				on:keypress
 			>
-				{c.task}
-				{#if selected != c.task}
+				{c.label}
+				{#if selected != c.label}
 					<button class="ml-3" on:click={() => removeChipArr(index)}
 						><Icon icon="ci:close-md" /></button
 					>
 				{/if}
-				{#if selected === c.task}
+				{#if selected === c.label}
 					<div class="ml-3">
 						<Icon icon="ci:check-big" />
 					</div>
