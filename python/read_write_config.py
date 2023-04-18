@@ -24,22 +24,34 @@ def remove_category(label, config):
             break
 
 
-def main(operation, args):
-    config_path = os.path.expanduser("~") + "\documents\HabitLab" + "/config.json"
-    config = {}
+def load_config(config_path):
     with open(config_path, "r", encoding="utf-8") as file:
-        config = json.load(file)
-        # print(config)
-        match operation:
-            case "get":
-                pass
-            case "add-category":
-                append_category(args[0], args[1], config)
-            case "remove-category":
-                remove_category(args[0], config)
-        # print(config)
+        return json.load(file)
+
+
+def save_config(config, config_path):
     with open(config_path, "w", encoding="utf-8") as file:
         json.dump(config, file, indent=4)
+
+
+def main(operation, args):
+    config_path = os.path.join(
+        os.path.expanduser("~"), "documents", "HabitLab", "config.json"
+    )
+    config = load_config(config_path)
+
+    operations = {
+        "get": lambda: None,
+        "add-category": lambda: append_category(args[0], args[1], config),
+        "remove-category": lambda: remove_category(args[0], config),
+    }
+
+    if operation in operations:
+        operations[operation]()
+    else:
+        raise ValueError(f"Invalid operation: {operation}")
+
+    save_config(config, config_path)
     print(config)
 
 
