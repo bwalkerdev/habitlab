@@ -16,8 +16,7 @@
         "all": false,
         "sidecar": true,
         "scope": [
-          { "name": "../python/dist/greeting", "sidecar": true },
-          { "name": "../python/dist/current_path", "sidecar": true }
+          { "name": "../python/dist/greeting", "sidecar": true }
         ],
         "open": true
       }
@@ -30,8 +29,7 @@
         "depends": []
       },
       "externalBin": [
-        "../python/dist/greeting",
-        "../python/dist/current_path"
+        "../python/dist/greeting"
       ],
       "icon": [
         "icons/32x32.png",

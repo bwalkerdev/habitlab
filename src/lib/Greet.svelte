@@ -10,12 +10,11 @@
 
 	onMount(async () => {
 		greeting = await invoke('py_greet');
-		path = await invoke('py_path');
 	});
 </script>
 
 <div class="flex flex-row">
-	<div class="basis-1/4 m-5"><h3>{greeting} the current path is: {path}</h3></div>
+	<div class="basis-1/4 m-5"><h3>{greeting}</h3></div>
 	<div class="grow" />
 	<div class="basis-12 m-5"><h3>2🔥</h3></div>
 </div>

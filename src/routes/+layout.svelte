@@ -5,6 +5,7 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
+	import { autoModeWatcher } from '@skeletonlabs/skeleton';
 	import { AppShell, AppBar, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
 	import { writable } from 'svelte/store';
 	import type { Writable } from 'svelte/store';
@@ -12,6 +13,10 @@
 	import Icon from '@iconify/svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
 </script>
+
+<svelte:head
+	>{@html `<script>${autoModeWatcher.toString()} autoModeWatcher();</script>`}</svelte:head
+>
 
 <AppShell>
 	<svelte:fragment slot="sidebarLeft">

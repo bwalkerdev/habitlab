@@ -40,6 +40,9 @@
 		chipArr.splice(index, 1);
 		chipArr = [...chipArr];
 	}
+	const onKeyPress = (e: KeyboardEvent) => {
+		if (e.code === 'Enter') pushChipArr();
+	};
 </script>
 
 <div class="flex flex-row mb-5">
@@ -69,7 +72,7 @@
 	</div>
 	<div class="card p-4 mx-5 basis-60 flex-none rounded-lg">
 		<div class="flex flex-row items-center py-0.5">
-			<input class="input rounded-md px-1" bind:value={newChipName} />
+			<input class="input rounded-md px-1" bind:value={newChipName} on:keypress={onKeyPress} />
 			<input class="rounded px-1 mx-2 variant-ghost-surface" type="color" bind:value={chipColor} />
 			<button type="button" class="btn btn-sm variant-filled" on:click={pushChipArr}
 				><Icon icon="ci:add-plus" /></button
