@@ -15,57 +15,42 @@
 	let selected = '';
 	let newChipName = '';
 
-	let randomColor = () => {
-		let color = '#';
-		for (let i = 0; i < 6; i++) {
-			color += Math.floor(Math.random() * 16).toString(16);
-		}
-		return color;
+	const randomColor = (): string => {
+		return (
+			'#' + Array.from({ length: 6 }, () => Math.floor(Math.random() * 16).toString(16)).join('')
+		);
 	};
 
 	let chipColor = randomColor();
-
 	let chipArr: Category[] = [];
 
 	onMount(async () => {
 		stringConfig = await invoke('get_config');
-		let config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
+		const config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
 		chipArr = config.categories;
 	});
 
-	function inChipArr() {
-		for (let i = 0; i < chipArr.length; i++) {
-			if (chipArr[i].label === newChipName) {
-				return true;
-			}
-		}
-		return false;
-	}
+	const inChipArr = (): boolean => chipArr.some((chip) => chip.label === newChipName);
 
 	async function pushChipArr() {
-		if (newChipName && newChipName != 'Null' && newChipName != 'null' && !inChipArr()) {
+		if (newChipName && newChipName !== 'Null' && newChipName !== 'null' && !inChipArr()) {
 			invoke('check_config');
-			// Test push to python
-			stringConfig = await invoke('add_category', {
-				category: newChipName,
-				color: chipColor
-			});
-			let config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
-			console.log(stringConfig);
+			stringConfig = await invoke('add_category', { category: newChipName, color: chipColor });
+			const config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
 			chipArr = config.categories;
 			newChipName = '';
 			chipColor = randomColor();
 		}
 	}
+
 	async function removeChipArr(index: number) {
-		let category = chipArr[index].label;
+		const category = chipArr[index].label;
 		invoke('check_config');
-		stringConfig = await invoke('remove_category', {
-			category: category
-		});
-		let config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
+		stringConfig = await invoke('remove_category', { category });
+		const config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
 		chipArr = config.categories;
 	}
+
 	const onKeyPress = (e: KeyboardEvent) => {
 		if (e.code === 'Enter') pushChipArr();
 	};
@@ -77,13 +62,11 @@
 			<div
 				class="chip {selected === c.label ? 'chip-selected' : 'chip-not-selected'} mx-1"
 				style="--theme-color: {c.color}"
-				on:click={() => {
-					selected = c.label;
-				}}
+				on:click={() => (selected = c.label)}
 				on:keypress
 			>
 				{c.label}
-				{#if selected != c.label}
+				{#if selected !== c.label}
 					<button class="ml-3" on:click={() => removeChipArr(index)}
 						><Icon icon="ci:close-md" /></button
 					>
@@ -101,8 +84,8 @@
 			<input class="input rounded-md px-1" bind:value={newChipName} on:keypress={onKeyPress} />
 			<input class="rounded px-1 mx-2 variant-ghost-surface" type="color" bind:value={chipColor} />
 			<button type="button" class="btn btn-sm variant-filled" on:click={pushChipArr}
-				><Icon icon="ci:add-plus" /></button
-			>
+				><Icon icon="ci:add-plus" />
+			</button>
 		</div>
 	</div>
 </div>
