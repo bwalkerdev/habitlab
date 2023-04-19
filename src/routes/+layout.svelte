@@ -31,3 +31,6 @@
 	<slot />
 	<!-- ---- / ---- -->
 </AppShell>
+
+<style>
+</style>
