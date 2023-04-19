@@ -17,5 +17,9 @@
 <div class="flex flex-row">
 	<div class="basis-1/4 m-5"><h3>{greeting}</h3></div>
 	<div class="grow" />
-	<div class="basis-12 m-5"><h3>{streak}🔥</h3></div>
+	<div class="basis-12 m-5">
+		<h3 class="whitespace-nowrap">
+			{#if streak}{streak}🔥{/if}
+		</h3>
+	</div>
 </div>
