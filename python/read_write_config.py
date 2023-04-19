@@ -61,6 +61,7 @@ def check_streak(config):
         config["metadata"]["streak"] = 0
     else:
         config["metadata"]["streak"] += 1
+    update_last_modified(config)
     print(config["metadata"]["streak"])
 
 
@@ -93,7 +94,6 @@ def main(operation, args):
     else:
         raise ValueError(f"Invalid operation: {operation}")
 
-    update_last_modified(config)
     save_config(config, config_path)
 
 
