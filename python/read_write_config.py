@@ -17,6 +17,7 @@ def append_category(label, color, config):
         config["categories"] = []
 
     config["categories"].append(create_category(label, color))
+    print(config)
 
 
 def remove_category(label, config):
@@ -24,29 +25,43 @@ def remove_category(label, config):
         if category["label"] == label:
             config["categories"].remove(category)
             break
+    print(config)
 
 
 # Date and Time Functions
 def update_last_modified(config):
+    build_meta_if_not_exists(config)
     config["metadata"]["lastModified"]["date"] = str(date.today())
     config["metadata"]["lastModified"]["time"] = str(datetime.now().time())
 
 
+def build_meta_if_not_exists(config):
+    if "metadata" not in config:
+        config["metadata"] = {}
+    if "lastModified" not in config["metadata"]:
+        config["metadata"]["lastModified"] = {
+            "date": str(date.today()),
+            "time": str(datetime.now().time()),
+        }
+    if "streak" not in config["metadata"]:
+        config["metadata"]["streak"] = 0
+
+
 def check_streak(config):
+    build_meta_if_not_exists(config)
     last_modified = [
         int(x) for x in (config["metadata"]["lastModified"]["date"]).split("-")
     ]
     last_modified = date(last_modified[0], last_modified[1], last_modified[2])
-    print(last_modified)
     current_date = date.today()
     delta = current_date - last_modified
-    print("DEBUG ", delta.days)
     if delta.days == 0:
         pass
     elif delta.days > 1:
         config["metadata"]["streak"] = 0
     else:
         config["metadata"]["streak"] += 1
+    print(config["metadata"]["streak"])
 
 
 # Main Functions
@@ -67,7 +82,7 @@ def main(operation, args):
     config = load_config(config_path)
 
     operations = {
-        "get": lambda: None,
+        "get": lambda: print(config),
         "add-category": lambda: append_category(args[0], args[1], config),
         "remove-category": lambda: remove_category(args[0], config),
         "check-streak": lambda: check_streak(config),
@@ -80,7 +95,6 @@ def main(operation, args):
 
     update_last_modified(config)
     save_config(config, config_path)
-    print(config)
 
 
 if __name__ == "__main__":

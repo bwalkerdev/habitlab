@@ -29,6 +29,11 @@ async fn py_greet() -> String {
 }
 
 #[tauri::command]
+async fn get_config() -> String {
+    execute_python_command("read_write_config", vec![String::from("get")]).await
+}
+
+#[tauri::command]
 async fn check_config() -> String {
     execute_python_command("check_config", vec![]).await
 }
@@ -52,8 +57,8 @@ async fn remove_category(category: String) -> String {
 }
 
 #[tauri::command]
-async fn get_config() -> String {
-    execute_python_command("read_write_config", vec![String::from("get")]).await
+async fn check_streak() -> String {
+    execute_python_command("read_write_config", vec![String::from("check-streak")]).await
 }
 
 fn main() {
@@ -63,7 +68,8 @@ fn main() {
             check_config,
             add_category,
             remove_category,
-            get_config
+            get_config,
+            check_streak
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

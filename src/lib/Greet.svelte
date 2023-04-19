@@ -6,26 +6,16 @@
 	import { onMount } from 'svelte';
 
 	let greeting = '';
-	let streak: number;
-
-	async function getStreak() {
-		await invoke('check_config');
-		let stringConfig: string = await invoke('get_config');
-		const config = JSON.parse(stringConfig.replace(/'/g, '"'));
-		// Get current date
-		const lastModified = config.meta.lastModified;
-		const currentStreak = config.meta.currentStreak;
-		const date = new Date();
-	}
+	let streak: '';
 
 	onMount(async () => {
 		greeting = await invoke('py_greet');
-		// streak = await getStreak;
+		streak = await invoke('check_streak');
 	});
 </script>
 
 <div class="flex flex-row">
 	<div class="basis-1/4 m-5"><h3>{greeting}</h3></div>
 	<div class="grow" />
-	<div class="basis-12 m-5"><h3>2🔥</h3></div>
+	<div class="basis-12 m-5"><h3>{streak}🔥</h3></div>
 </div>
