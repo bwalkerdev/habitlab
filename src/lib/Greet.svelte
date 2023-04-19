@@ -6,10 +6,21 @@
 	import { onMount } from 'svelte';
 
 	let greeting = '';
-	let path = '';
+	let streak: number;
+
+	async function getStreak() {
+		await invoke('check_config');
+		let stringConfig: string = await invoke('get_config');
+		const config = JSON.parse(stringConfig.replace(/'/g, '"'));
+		// Get current date
+		const lastModified = config.meta.lastModified;
+		const currentStreak = config.meta.currentStreak;
+		const date = new Date();
+	}
 
 	onMount(async () => {
 		greeting = await invoke('py_greet');
+		// streak = await getStreak;
 	});
 </script>
 

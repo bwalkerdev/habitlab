@@ -2,7 +2,15 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
+	import { selectedTask } from '../stores';
 
+	let stringConfig: string;
+	let selected = '';
+	let newChipName = '';
+
+	selectedTask.subscribe((value) => {
+		selected = value;
+	});
 	interface Category {
 		label: string;
 		color: string;
@@ -10,10 +18,6 @@
 	interface Config {
 		categories: Category[];
 	}
-
-	let stringConfig: string;
-	let selected = '';
-	let newChipName = '';
 
 	const randomColor = (): string => {
 		return (
@@ -49,6 +53,7 @@
 		stringConfig = await invoke('remove_category', { category });
 		const config: Config = JSON.parse(stringConfig.replace(/'/g, '"'));
 		chipArr = config.categories;
+		selectedTask.update((n) => '');
 	}
 
 	const onKeyPress = (e: KeyboardEvent) => {
@@ -62,7 +67,7 @@
 			<div
 				class="chip {selected === c.label ? 'chip-selected' : 'chip-not-selected'} mx-1"
 				style="--theme-color: {c.color}"
-				on:click={() => (selected = c.label)}
+				on:click={() => selectedTask.update((n) => c.label)}
 				on:keypress
 			>
 				{c.label}

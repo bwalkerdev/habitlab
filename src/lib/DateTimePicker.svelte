@@ -1,8 +1,15 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import TaskSelector from './TaskSelector.svelte';
+	import { selectedTask } from '../stores';
+
+	let selectedChip: string;
+
+	selectedTask.subscribe((value) => {
+		selectedChip = value;
+	});
 
 	interface TaskTime {
+		task: string;
 		date: Date;
 		from: {
 			hour: string;
@@ -17,6 +24,7 @@
 	var globalDate: Date;
 
 	let taskTime: TaskTime = {
+		task: '',
 		date: new Date(0),
 		from: {
 			hour: '',
@@ -29,7 +37,9 @@
 	};
 
 	const submitTaskTime = () => {
+		taskTime.task = selectedChip;
 		if (
+			taskTime.task &&
 			taskTime.date &&
 			taskTime.from.hour &&
 			taskTime.from.AMPM &&
@@ -41,6 +51,7 @@
 	};
 </script>
 
+{selectedChip}
 <div class="flex flex-row">
 	<div class="card p-4 mx-5 basis-60 flex-none rounded-lg">
 		<label for="date">Date: </label><input
