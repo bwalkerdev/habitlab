@@ -5,6 +5,15 @@
 	let selectedChip: string;
 	let buttonColor = 'bg-surface-800';
 	let buttonIcon = 'ci:check-big';
+	let dateColor = 'bg-surface-200 dark:bg-surface-600 dark:border-surface-450';
+
+	function checkDateColor() {
+		if (taskTime.date) {
+			dateColor = 'bg-lime-600';
+		} else {
+			dateColor = 'bg-surface-200 dark:bg-surface-600 dark:border-surface-450';
+		}
+	}
 
 	selectedTask.subscribe((value) => {
 		selectedChip = value;
@@ -92,7 +101,14 @@
 	<div class="card p-4 mx-5 basis-60 flex-none rounded-lg flex items-center justify-center">
 		<div class="flex-col align-middle text-center content-center">
 			<h4>On which day?</h4>
-			<input name="date" id="date" type="date" bind:value={taskTime.date} />
+			<input
+				name="date"
+				id="date"
+				type="date"
+				bind:value={taskTime.date}
+				class="animated {dateColor} rounded"
+				on:change={checkDateColor}
+			/>
 		</div>
 	</div>
 	<div class="card p-4 flex flex-grow flex-nowrap overflow-x-auto rounded-lg">
@@ -101,6 +117,16 @@
 		</div>
 		<div class="flex flex-col text-center">
 			<label for="from">From: </label>
+			<select
+				id="from-AM/PM"
+				bind:value={taskTime.from.AMPM}
+				on:change={() => changeFromColor()}
+				class="{fromColor} animated"
+			>
+				<option value="" disabled selected hidden>AM/PM</option>
+				<option value="AM">AM</option>
+				<option value="PM">PM</option>
+			</select>
 			<select name="from" id="from" bind:value={taskTime.from.hour} class="animated {fromColor}">
 				<option value="" disabled selected hidden>Start Hour</option>
 				<option value="12">12:00</option>
@@ -116,19 +142,19 @@
 				<option value="10">10:00</option>
 				<option value="11">11:00</option>
 			</select>
+		</div>
+		<div class="flex flex-col pl-3 text-center">
+			<label for="to">To: </label>
 			<select
-				id="from-AM/PM"
-				bind:value={taskTime.from.AMPM}
-				on:change={() => changeFromColor()}
-				class="{fromColor} animated"
+				id="to-AM/PM"
+				bind:value={taskTime.to.AMPM}
+				on:change={() => changeToColor()}
+				class="{toColor} animated"
 			>
 				<option value="" disabled selected hidden>AM/PM</option>
 				<option value="AM">AM</option>
 				<option value="PM">PM</option>
 			</select>
-		</div>
-		<div class="flex flex-col pl-3 text-center">
-			<label for="to">To: </label>
 			<select name="to" id="to" bind:value={taskTime.to.hour} class="{toColor} animated">
 				<option value="" disabled selected hidden>End Hour</option>
 				<option value="12">12:00</option>
@@ -143,16 +169,6 @@
 				<option value="9">9:00</option>
 				<option value="10">10:00</option>
 				<option value="11">11:00</option>
-			</select>
-			<select
-				id="to-AM/PM"
-				bind:value={taskTime.to.AMPM}
-				on:change={() => changeToColor()}
-				class="{toColor} animated"
-			>
-				<option value="" disabled selected hidden>AM/PM</option>
-				<option value="AM">AM</option>
-				<option value="PM">PM</option>
 			</select>
 		</div>
 	</div>

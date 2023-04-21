@@ -3,6 +3,9 @@
     windows_subsystem = "windows"
 )]
 
+use dirs_next::home_dir;
+use open;
+use std::path::PathBuf;
 use tauri::api::process::{Command, CommandEvent};
 
 async fn execute_python_command(command_name: &str, args: Vec<String>) -> String {
@@ -26,6 +29,32 @@ async fn execute_python_command(command_name: &str, args: Vec<String>) -> String
 #[tauri::command]
 async fn py_greet() -> String {
     execute_python_command("greeting", vec![]).await
+}
+
+fn get_habitlab_dir() -> Option<PathBuf> {
+    let mut habitlab_path = home_dir()?;
+
+    if cfg!(target_os = "windows") {
+        habitlab_path.push("Documents\\HabitLab");
+    } else if cfg!(target_os = "macos") {
+        habitlab_path.push("Documents/HabitLab");
+    } else {
+        // Assuming Linux or other Unix-like systems
+        habitlab_path.push("Documents/HabitLab");
+    }
+
+    Some(habitlab_path)
+}
+
+#[tauri::command]
+async fn open_config_folder() {
+    if let Some(config_path) = get_habitlab_dir() {
+        if let Err(err) = open::that(config_path) {
+            println!("Failed to open the config directory: {}", err);
+        }
+    } else {
+        println!("Unable to determine the config directory");
+    }
 }
 
 #[tauri::command]
@@ -69,7 +98,8 @@ fn main() {
             add_category,
             remove_category,
             get_config,
-            check_streak
+            check_streak,
+            open_config_folder
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
