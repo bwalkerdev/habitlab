@@ -30,27 +30,13 @@ def remove_category(label, config):
 
 # Date and Time Functions
 def update_last_modified(config):
-    build_meta_if_not_exists(config)
-    config["metadata"]["lastModified"]["date"] = str(date.today())
-    config["metadata"]["lastModified"]["time"] = str(datetime.now().time())
-
-
-def build_meta_if_not_exists(config):
-    if "metadata" not in config:
-        config["metadata"] = {}
-    if "lastModified" not in config["metadata"]:
-        config["metadata"]["lastModified"] = {
-            "date": str(date.today()),
-            "time": str(datetime.now().time()),
-        }
-    if "streak" not in config["metadata"]:
-        config["metadata"]["streak"] = 0
+    config["metadata"]["modified"]["date"] = str(date.today())
+    config["metadata"]["modified"]["time"] = str(datetime.now().time())
 
 
 def check_streak(config):
-    build_meta_if_not_exists(config)
     last_modified = [
-        int(x) for x in (config["metadata"]["lastModified"]["date"]).split("-")
+        int(x) for x in (config["metadata"]["modified"]["date"]).split("-")
     ]
     last_modified = date(last_modified[0], last_modified[1], last_modified[2])
     current_date = date.today()

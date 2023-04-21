@@ -63,6 +63,7 @@
 
 <div class="flex flex-row mb-5">
 	<div class="card p-4 ml-5 flex flex-grow flex-nowrap overflow-x-auto rounded-lg">
+		<div class="flex-row flex items-center justify-center pr-1"><h5>Task:</h5></div>
 		{#each chipArr as c, index}
 			<div
 				class="chip {selected === c.label ? 'chip-selected' : 'chip-not-selected'} mx-1"

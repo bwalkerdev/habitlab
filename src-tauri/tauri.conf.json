@@ -70,9 +70,9 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": true,
+        "resizable": false,
         "title": "HabitLab",
-        "width": 800
+        "width": 920
       }
     ]
   }

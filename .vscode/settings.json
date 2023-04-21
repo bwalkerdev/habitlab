@@ -75,7 +75,6 @@
 		"track",
 		"width"
 	],
-	"cSpell.words": [
-		"AMPM"
-	]
+	"cSpell.words": ["AMPM"],
+	"python.formatting.provider": "black"
 }

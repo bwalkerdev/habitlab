@@ -1,11 +1,20 @@
 import os
+import json
+
+schema = {
+    "categories": [],
+    "metadata": {
+        "modified": {"date": "1970-01-01", "time": "00:00:00.000000"},
+        "streak": 1,
+    },
+}
 
 
 def main():
     # current_directory = os.getcwd()
-    storage_path = os.path.expanduser("~") + "\documents\HabitLab"
+    storage_path = os.path.join(os.path.expanduser("~"), "documents", "HabitLab")
     storage_path_exists = os.path.exists(storage_path)
-    storage_json_path = storage_path + "/config.json"
+    storage_json_path = os.path.join(storage_path, "config.json")
     storage_json_exists = os.path.exists(storage_json_path)
     created_path = False
     created_json = False
@@ -16,7 +25,7 @@ def main():
         created_path = True
     if not storage_json_exists:
         with open(storage_json_path, "w") as f:
-            f.write("{}")
+            json.dump(schema, f, indent=4)
         created_json = True
     genesis = (created_path, created_json)
     match genesis:
