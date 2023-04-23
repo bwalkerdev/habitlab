@@ -7,6 +7,7 @@ schema = {
         "modified": {"date": "1970-01-01", "time": "00:00:00.000000"},
         "streak": 1,
     },
+    "habits": {},
 }
 
 

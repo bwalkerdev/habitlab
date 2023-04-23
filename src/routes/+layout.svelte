@@ -26,7 +26,8 @@
 					><Icon icon="ci:folder-document" width="35" height="35" /></AppRailTile
 				>
 			</div>
-			<AppRailTile value={2}><Icon icon="ci:settings" width="35" height="35" /></AppRailTile>
+			<AppRailTile value={2}><Icon icon="ci:arrows-reload-01" width="35" height="35" /></AppRailTile
+			>
 			<svelte:fragment slot="trail"><LightSwitch class="mx-4 my-5" /></svelte:fragment>
 		</AppRail>
 	</svelte:fragment>

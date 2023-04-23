@@ -51,6 +51,48 @@ def check_streak(config):
     print(config["metadata"]["streak"])
 
 
+# Data Functions
+def add_habit_to_file(habit, config):
+    # print(f"Add_habit called with {habit}")
+    habit = json.loads(habit)
+    task = habit["task"]
+    color = habit["color"]
+    from_date = habit["from"]["date"]
+    from_hour = int(habit["from"]["hour"])
+    from_ampm = habit["from"]["AMPM"]
+    to_date = habit["to"]["date"]
+    to_hour = int(habit["to"]["hour"])
+    to_ampm = habit["to"]["AMPM"]
+
+    # Convert to Military Time
+    from_hour = convert_to_24_hour(from_hour, from_ampm)
+    to_hour = convert_to_24_hour(to_hour, to_ampm)
+
+    # Update habits
+    habits = config["habits"]
+    if from_date not in habits:
+        habits[from_date] = {}
+
+    for hour in range(from_hour, to_hour + 1):
+        hour_str = f"{hour:02d}:00"
+        habits[from_date][hour_str] = {"task": task, "color": color}
+
+    # Update metadata
+    config["metadata"]["modified"]["date"] = str(datetime.now().date())
+    config["metadata"]["modified"]["time"] = str(datetime.now().time())
+    print(config)
+
+
+# Helper Functions
+def convert_to_24_hour(hour, ampm):
+    if ampm == "PM" and hour != 12:
+        return hour + 12
+    elif ampm == "AM" and hour == 12:
+        return 0
+    else:
+        return hour
+
+
 # Main Functions
 def load_config(config_path):
     with open(config_path, "r", encoding="utf-8") as file:
@@ -67,12 +109,20 @@ def main(operation, args):
         os.path.expanduser("~"), "documents", "HabitLab", "config.json"
     )
     config = load_config(config_path)
+    fake_data = {
+        "task": "Satanic Rituals",
+        "color": "#24d996",
+        "from": {"date": "2023-04-22", "hour": "12", "AMPM": "PM"},
+        "to": {"date": "2023-04-22", "hour": "3", "AMPM": "PM"},
+    }
 
     operations = {
         "get": lambda: print(config),
         "add-category": lambda: append_category(args[0], args[1], config),
         "remove-category": lambda: remove_category(args[0], config),
         "check-streak": lambda: check_streak(config),
+        # Need to change data to args[0]. You will hate yourself if you don't.
+        "add-habit-to-file": lambda: add_habit_to_file(args[0], config),
     }
 
     if operation in operations:

@@ -90,6 +90,15 @@ async fn check_streak() -> String {
     execute_python_command("read_write_config", vec![String::from("check-streak")]).await
 }
 
+#[tauri::command]
+async fn add_habit_to_file(habit: String) -> String {
+    execute_python_command(
+        "read_write_config",
+        vec![String::from("add-habit-to-file"), habit],
+    )
+    .await
+}
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -99,7 +108,8 @@ fn main() {
             remove_category,
             get_config,
             check_streak,
-            open_config_folder
+            open_config_folder,
+            add_habit_to_file
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
