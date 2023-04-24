@@ -2,7 +2,9 @@
 	import Icon from '@iconify/svelte';
 	import { selectedTask, selectedColor } from '../stores';
 	import { invoke } from '@tauri-apps/api/tauri';
+	import { createEventDispatcher } from 'svelte';
 
+	const dispatch = createEventDispatcher();
 	let selectedChip: string;
 	let colorSelected: string;
 	let buttonColor = 'bg-surface-800';
@@ -83,6 +85,7 @@
 			let habitString = JSON.stringify(habit);
 			console.log(habitString);
 			config = await invoke('add_habit_to_file', { habit: habitString });
+			dispatch('configupdated');
 			setTimeout(() => {
 				buttonColor = 'bg-surface-800';
 				buttonIcon = 'ci:check-big';

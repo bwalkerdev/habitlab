@@ -69,10 +69,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 900,
         "resizable": false,
         "title": "HabitLab",
-        "width": 920
+        "width": 1000
       }
     ]
   }
