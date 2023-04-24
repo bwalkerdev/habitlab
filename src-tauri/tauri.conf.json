@@ -18,7 +18,8 @@
         "scope": [
           { "name": "../python/dist/greeting", "sidecar": true },
           { "name": "../python/dist/check_config", "sidecar": true },
-          { "name": "../python/dist/read_write_config", "sidecar": true}
+          { "name": "../python/dist/read_write_config", "sidecar": true},
+          { "name": "../python/dist/generate_tips", "sidecar": true}
         ],
         "open": true
       }
@@ -33,7 +34,8 @@
       "externalBin": [
         "../python/dist/greeting",
         "../python/dist/check_config",
-        "../python/dist/read_write_config"
+        "../python/dist/read_write_config",
+        "../python/dist/generate_tips"
       ],
       "icon": [
         "icons/32x32.png",
@@ -69,7 +71,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 900,
+        "height": 700,
         "resizable": false,
         "title": "HabitLab",
         "width": 1000

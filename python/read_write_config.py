@@ -106,7 +106,7 @@ def save_config(config, config_path):
 
 def main(operation, args):
     config_path = os.path.join(
-        os.path.expanduser("~"), "documents", "HabitLab", "config.json"
+        os.path.expanduser("~"), "Documents", "HabitLab", "config.json"
     )
     config = load_config(config_path)
     fake_data = {

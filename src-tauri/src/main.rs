@@ -31,18 +31,16 @@ async fn py_greet() -> String {
     execute_python_command("greeting", vec![]).await
 }
 
+#[tauri::command]
+async fn gen_tips(invoke_message: String) -> String {
+    println!("data is {}", invoke_message);
+    execute_python_command("generate_tips", vec![invoke_message]).await
+}
+
 fn get_habitlab_dir() -> Option<PathBuf> {
     let mut habitlab_path = home_dir()?;
-
-    if cfg!(target_os = "windows") {
-        habitlab_path.push("Documents\\HabitLab");
-    } else if cfg!(target_os = "macos") {
-        habitlab_path.push("Documents/HabitLab");
-    } else {
-        // Assuming Linux or other Unix-like systems
-        habitlab_path.push("Documents/HabitLab");
-    }
-
+    habitlab_path.push("Documents");
+    habitlab_path.push("HabitLab");
     Some(habitlab_path)
 }
 
@@ -109,7 +107,8 @@ fn main() {
             get_config,
             check_streak,
             open_config_folder,
-            add_habit_to_file
+            add_habit_to_file,
+            gen_tips
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
