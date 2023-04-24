@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { invoke } from '@tauri-apps/api/tauri';
 
 	export let config = '';
 
@@ -62,8 +61,8 @@
 	let selectedYear = '';
 
 	onMount(async () => {
-		const jsonString: string = await invoke('get_config');
-		const jsonStringWithDoubleQuotes = jsonString.replace(/'/g, '"');
+		selectedYear = new Date().getFullYear().toString();
+		const jsonStringWithDoubleQuotes = config.replace(/'/g, '"');
 		console.log(jsonStringWithDoubleQuotes);
 		let habitObj: { [date: string]: { [hour: string]: Habit } } = JSON.parse(
 			jsonStringWithDoubleQuotes
@@ -86,11 +85,35 @@
 		}
 		console.log(normalizedHabits);
 	});
+	$: if (config) {
+		const jsonStringWithDoubleQuotes = config.replace(/'/g, '"');
+		console.log(jsonStringWithDoubleQuotes);
+		let habitObj: { [date: string]: { [hour: string]: Habit } } = JSON.parse(
+			jsonStringWithDoubleQuotes
+		).habits;
+		console.log(habitObj);
+		for (let key in habitObj) {
+			console.log(key);
+			let keyArr = key.split('-');
+			const year = keyArr[0];
+			const month = keyArr[1];
+			const day = keyArr[2];
+
+			if (!normalizedHabits[year]) {
+				normalizedHabits[year] = {};
+			}
+			if (!normalizedHabits[year][month]) {
+				normalizedHabits[year][month] = {};
+			}
+			normalizedHabits[year][month][day] = habitObj[key];
+		}
+		console.log(normalizedHabits);
+	}
 </script>
 
 <div class="flex flex-col justify-center items-center">
 	{#if Object.keys(normalizedHabits).length > 0}
-		<label for="habitYear">Select habit year:</label>
+		<label for="habitYear">Select year to visualize:</label>
 		<select id="habitYear" name="habitYear" bind:value={selectedYear}>
 			{#each Object.keys(normalizedHabits) as habitYear}
 				<option value={habitYear}>{habitYear}</option>
