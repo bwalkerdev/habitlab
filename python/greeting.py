@@ -16,11 +16,11 @@ def generate_greeting():
         prompt = ""
         now = datetime.datetime.now()
         if now.hour < 12:
-            prompt = f"The time is {now}. You are a cynical and depressed AI who's only purpose is to generate a short morning greeting. Generate a 10 word snarky greeting."
+            prompt = f"The time is {now}. You are a cynical and depressed AI who's only purpose is to generate a short morning greeting. Generate a 10ish word snarky greeting."
         elif now.hour < 18:
-            prompt = f"The time is {now}. You are a cynical and depressed AI who's only purpose is to generate a short afternoon greeting. Generate a 10 word snarky greeting."
+            prompt = f"The time is {now}. You are a cynical and depressed AI who's only purpose is to generate a short afternoon greeting. Generate a 10ish word snarky greeting."
         else:
-            prompt = f"The time is {now}. You are a cynical and depressed AI who's only purpose is to generate a short evening greeting. Generate a 10 word snarky greeting."
+            prompt = f"The time is {now}. You are a cynical and depressed AI who's only purpose is to generate a short evening greeting. Generate a 10ish word snarky greeting."
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo", messages=[{"role": "system", "content": prompt}]
         )

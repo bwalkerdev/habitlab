@@ -74,7 +74,7 @@ def add_habit_to_file(habit, config):
         habits[from_date] = {}
 
     for hour in range(from_hour, to_hour + 1):
-        hour_str = f"{hour:02d}:00"
+        hour_str = f"{hour:02d}"
         habits[from_date][hour_str] = {"task": task, "color": color}
 
     # Update metadata
