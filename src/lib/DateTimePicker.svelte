@@ -10,22 +10,14 @@
 	let buttonColor = 'bg-surface-800';
 	let buttonIcon = 'ci:check-big';
 	let startDateColor = 'bg-surface-200 dark:bg-surface-600 dark:border-surface-450';
-	let endDateColor = 'bg-surface-200 dark:bg-surface-600 dark:border-surface-450';
 	let config = '';
 
 	function checkStartDateColor() {
+		habit.to.date = habit.from.date;
 		if (habit.from.date) {
 			startDateColor = 'bg-lime-600';
 		} else {
 			startDateColor = 'bg-surface-200 dark:bg-surface-600 dark:border-surface-450';
-		}
-	}
-
-	function checkEndDateColor() {
-		if (habit.to.date) {
-			endDateColor = 'bg-lime-600';
-		} else {
-			endDateColor = 'bg-surface-200 dark:bg-surface-600 dark:border-surface-450';
 		}
 	}
 
@@ -123,7 +115,6 @@
 	<div class="card p-4 mx-5 basis-60 flex-none rounded-lg flex items-center justify-center">
 		<div class="flex-col align-middle text-center content-center">
 			<h4>On which day?</h4>
-			<h6>Start:</h6>
 			<input
 				name="start-date"
 				id="start-date"
@@ -131,15 +122,6 @@
 				bind:value={habit.from.date}
 				class="animated {startDateColor} rounded"
 				on:change={checkStartDateColor}
-			/>
-			<h6>End:</h6>
-			<input
-				name="start-date"
-				id="start-date"
-				type="date"
-				bind:value={habit.to.date}
-				class="animated {endDateColor} rounded"
-				on:change={checkEndDateColor}
 			/>
 		</div>
 	</div>

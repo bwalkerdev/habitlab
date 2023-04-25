@@ -149,8 +149,10 @@
 				{/each}
 			</select>
 		{:else}
-			<p>Loading Visualization...</p>
-			<ProgressRadial class="ml-2 mt-1" width="w-5" />
+			<div class="flex justify-center mt-5">
+				<p>Loading Visualization</p>
+				<ProgressRadial class="ml-2 mt-1" width="w-5" />
+			</div>
 		{/if}
 	</div>
 
