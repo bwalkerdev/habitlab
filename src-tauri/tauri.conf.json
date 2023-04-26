@@ -6,8 +6,8 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "habitlab",
-    "version": "0.1.0"
+    "productName": "HabitLab",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -26,8 +26,8 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+      "category": "Lifestyle",
+      "copyright": "Bryce Walker",
       "deb": {
         "depends": []
       },
@@ -54,7 +54,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "Open source habit tracking app built with Svelte, Tauri, and Python. This is my final project for Mines CSCI102.",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -72,9 +72,9 @@
       {
         "fullscreen": false,
         "height": 700,
-        "resizable": false,
+        "resizable": true,
         "title": "HabitLab",
-        "width": 1000
+        "width": 900
       }
     ]
   }
