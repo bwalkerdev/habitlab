@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "HabitLab",
-    "version": "0.0.1"
+    "version": "0.0.2"
   },
   "tauri": {
     "allowlist": {
@@ -72,9 +72,12 @@
       {
         "fullscreen": false,
         "height": 700,
+        "width": 920,
+        "minWidth": 920,
+        "minHeight": 312,
+        "maxWidth": 920,
         "resizable": true,
-        "title": "HabitLab",
-        "width": 900
+        "title": "HabitLab"
       }
     ]
   }
