@@ -17,13 +17,13 @@
 - **If you happen upon an issue, please submit it to the project GitHub. I would like to keep improving this project**
 
 # Build this project
-## Requirements
+**Requirements**
 - Node.JS
 - Rust
 - Tauri CLI
 - Python
 - PyInstaller
 
-## How to build this project
+**How to build**
 //todo
 
