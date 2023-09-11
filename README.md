@@ -1,3 +1,5 @@
+![HabitLab_Poster_48x36 inches Final 5-2-2023 FOR PRINT-1 bak](https://github.com/papabryce/habitlab/assets/99450073/551af549-815c-4375-bb5e-9b814f38bcf7)
+
 # Introduction
 - Right now, HabitLab **only runs on Windows**. I can get it to compile for macOS, but I was unable to get the file system permissions working properly by the early submission date.
 - Think of this as an early alpha. There are bugs. So many bugs. I had no help building or bug testing this project, so I’m certain that things have slipped through the cracks.
