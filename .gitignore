@@ -11,5 +11,5 @@ vite.config.ts.timestamp-*
 /python/build/
 /python/dist/
 /python/creds.py
-/python/prompts.py
+# /python/prompts.py # burned myself with this... have to rewrite it
 /python/__pycache__

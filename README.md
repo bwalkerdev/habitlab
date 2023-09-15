@@ -1,3 +1,6 @@
+# Broken right now. I am working diligently to fix it
+I revoked my API key a while ago when transitioning to a new OpenAI account, but I forgot to replace HabitLab's key. I just did that so new builds will work, but I first need to repair some issues with the prompts. Please bear with me :)
+
 ![HabitLab_Poster_48x36 inches Final 5-2-2023 FOR PRINT-1 bak](https://github.com/papabryce/habitlab/assets/99450073/551af549-815c-4375-bb5e-9b814f38bcf7)
 
 # Introduction
